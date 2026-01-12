@@ -18,8 +18,8 @@ object Model {
         students.add(student)
     }
 
-    fun updateStudent(updatedStudent: Student) {
-        val index = students.indexOfFirst { it.id == updatedStudent.id }
+    fun updateStudent(originalId: String, updatedStudent: Student) {
+        val index = students.indexOfFirst { it.id == originalId }
         if (index != -1) {
             students[index] = updatedStudent
         }

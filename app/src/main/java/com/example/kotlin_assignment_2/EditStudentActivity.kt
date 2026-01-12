@@ -14,14 +14,15 @@ class EditStudentActivity : BaseActivity() {
 
     private lateinit var binding: ActivityEditStudentBinding
     private var student: Student? = null
+    private var originalStudentId: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityEditStudentBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val studentId = intent.getStringExtra(EXTRA_STUDENT_ID)
-        student = studentId?.let { Model.findStudentById(it) }
+        originalStudentId = intent.getStringExtra(EXTRA_STUDENT_ID)
+        student = originalStudentId?.let { Model.findStudentById(it) }
 
         student?.let {
             binding.editStudentNameEt.setText(it.name)
@@ -39,19 +40,23 @@ class EditStudentActivity : BaseActivity() {
                 address = binding.editStudentAddressEt.text.toString(),
                 isPresent = binding.editStudentCheckbox.isChecked
             )
-            Model.updateStudent(updatedStudent)
+            originalStudentId?.let { Model.updateStudent(it, updatedStudent) }
+
+            val resultIntent = Intent()
+            resultIntent.putExtra(StudentDetailsActivity.EXTRA_STUDENT_ID, updatedStudent.id)
+            setResult(RESULT_OK, resultIntent)
             finish()
         }
 
         binding.editStudentCancelBtn.setOnClickListener {
+            setResult(RESULT_CANCELED)
             finish()
         }
 
         binding.editStudentDeleteBtn.setOnClickListener {
             student?.id?.let { Model.deleteStudent(it) }
-            val intent = Intent(this, MainActivity::class.java)
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-            startActivity(intent)
+            setResult(RESULT_OK)
+            finish()
         }
     }
 }

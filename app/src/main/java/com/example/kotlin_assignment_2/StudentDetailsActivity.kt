@@ -2,6 +2,7 @@ package com.example.kotlin_assignment_2
 
 import android.content.Intent
 import android.os.Bundle
+import androidx.activity.result.contract.ActivityResultContracts
 import com.example.kotlin_assignment_2.databinding.ActivityStudentDetailsBinding
 import com.example.kotlin_assignment_2.models.Model
 import com.example.kotlin_assignment_2.models.Student
@@ -15,6 +16,14 @@ class StudentDetailsActivity : BaseActivity() {
     private lateinit var binding: ActivityStudentDetailsBinding
     private var student: Student? = null
 
+    private val editStudentLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode == RESULT_OK) {
+            val studentId = result.data?.getStringExtra(EXTRA_STUDENT_ID) ?: intent.getStringExtra(EXTRA_STUDENT_ID)
+            student = studentId?.let { Model.findStudentById(it) }
+            displayStudentDetails()
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityStudentDetailsBinding.inflate(layoutInflater)
@@ -22,19 +31,12 @@ class StudentDetailsActivity : BaseActivity() {
 
         val studentId = intent.getStringExtra(EXTRA_STUDENT_ID)
         student = studentId?.let { Model.findStudentById(it) }
+        displayStudentDetails()
 
         binding.detailsEditBtn.setOnClickListener {
             val intent = Intent(this, EditStudentActivity::class.java)
             intent.putExtra(EditStudentActivity.EXTRA_STUDENT_ID, student?.id)
-            startActivity(intent)
-        }
-    }
-
-    override fun onResume() {
-        super.onResume()
-        student?.let {
-            student = Model.findStudentById(it.id)
-            displayStudentDetails()
+            editStudentLauncher.launch(intent)
         }
     }
 
@@ -46,6 +48,6 @@ class StudentDetailsActivity : BaseActivity() {
             binding.detailsAddressTv.text = it.address
             binding.detailsCheckedTv.text = if (it.isPresent) "Present" else "Not Present"
             binding.detailsStudentImage.setImageResource(it.picture)
-        }
+        } ?: finish()
     }
 }
