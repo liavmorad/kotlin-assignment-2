@@ -22,7 +22,7 @@ class NewStudentActivity : BaseActivity() {
             val isPresent = binding.newStudentCheckbox.isChecked
 
             if (name.isNotBlank() && id.isNotBlank()) {
-                val newStudent = Student(name, id, phone, address, isPresent)
+                val newStudent = Student(name, id, phone, address, 0, 0, isPresent)
                 Model.addStudent(newStudent)
                 finish()
             }
