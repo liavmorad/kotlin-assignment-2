@@ -38,6 +38,8 @@ class EditStudentActivity : BaseActivity() {
                 id = binding.editStudentIdEt.text.toString(),
                 phone = binding.editStudentPhoneEt.text.toString(),
                 address = binding.editStudentAddressEt.text.toString(),
+                birthDate = 0,
+                birthTime = 0,
                 isPresent = binding.editStudentCheckbox.isChecked
             )
             originalStudentId?.let { Model.updateStudent(it, updatedStudent) }

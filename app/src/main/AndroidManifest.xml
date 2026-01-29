@@ -21,15 +21,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".NewStudentActivity"
-            android:label="New Student" />
-        <activity
-            android:name=".StudentDetailsActivity"
-            android:label="Student Details" />
-        <activity
-            android:name=".EditStudentActivity"
-            android:label="Edit Student" />
     </application>
 
 </manifest>

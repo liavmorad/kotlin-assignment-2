@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/studentsListFragment">
+
+    <!-- List Screen -->
+    <fragment
+        android:id="@+id/studentsListFragment"
+        android:name="com.example.kotlin_assignment_2.fragments.StudentsListFragment"
+        android:label="Students List"
+        tools:layout="@layout/fragment_students_list">
+        
+        <!-- Navigate to Details -->
+        <action
+            android:id="@+id/action_list_to_details"
+            app:destination="@id/studentDetailsFragment" />
+        
+        <!-- Navigate to Add -->
+        <action
+            android:id="@+id/action_list_to_add"
+            app:destination="@id/addStudentFragment" />
+    </fragment>
+
+    <!-- Add Screen -->
+    <fragment
+        android:id="@+id/addStudentFragment"
+        android:name="com.example.kotlin_assignment_2.fragments.AddStudentFragment"
+        android:label="Add Student"
+        tools:layout="@layout/fragment_add_student" />
+
+    <!-- Details Screen -->
+    <fragment
+        android:id="@+id/studentDetailsFragment"
+        android:name="com.example.kotlin_assignment_2.fragments.StudentDetailsFragment"
+        android:label="Student Details"
+        tools:layout="@layout/fragment_student_details">
+        
+        <!-- Argument: Student ID -->
+        <argument
+            android:name="studentId"
+            app:argType="string" />
+        
+        <!-- Navigate to Edit -->
+        <action
+            android:id="@+id/action_details_to_edit"
+            app:destination="@id/editStudentFragment" />
+    </fragment>
+
+    <!-- Edit Screen -->
+    <fragment
+        android:id="@+id/editStudentFragment"
+        android:name="com.example.kotlin_assignment_2.fragments.EditStudentFragment"
+        android:label="Edit Student"
+        tools:layout="@layout/fragment_edit_student">
+        
+        <!-- Argument: Student ID -->
+        <argument
+            android:name="studentId"
+            app:argType="string" />
+    </fragment>
+
+</navigation>

@@ -5,9 +5,9 @@ object Model {
 
     init {
         // Add some initial data for testing
-        students.add(Student("John Doe", "12345", "555-1234", "123 Main St", false))
-        students.add(Student("Jane Smith", "67890", "555-5678", "456 Oak Ave", true))
-        students.add(Student("Peter Jones", "54321", "555-8765", "789 Pine Ln", false))
+        students.add(Student("John Doe", "12345", "555-1234", "123 Main St", 0, 0, false))
+        students.add(Student("Jane Smith", "67890", "555-5678", "456 Oak Ave", 0, 0, true))
+        students.add(Student("Peter Jones", "54321", "555-8765", "789 Pine Ln", 0, 0, false))
     }
 
     fun findStudentById(id: String): Student? {
